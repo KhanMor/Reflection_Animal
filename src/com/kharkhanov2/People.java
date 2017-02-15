@@ -1,4 +1,4 @@
-package com.kharkhanov;
+package com.kharkhanov2;
 
 /**
  * Created by Mordr on 10.02.2017.

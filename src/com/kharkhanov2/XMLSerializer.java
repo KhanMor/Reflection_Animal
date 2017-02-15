@@ -1,4 +1,4 @@
-package com.kharkhanov;
+package com.kharkhanov2;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -29,7 +29,7 @@ public class XMLSerializer {
             Document document = documentBuilder.newDocument();
 
             Element objectElement = document.createElement("object");
-            objectElement.setAttribute("type", obj.getClass().getName());
+            objectElement.setAttribute("type", obj.getClass().getSimpleName());
             Field[] fields = obj.getClass().getDeclaredFields();
             for(Field field:fields){
                 Element fieldElement = document.createElement("field");
@@ -86,7 +86,9 @@ public class XMLSerializer {
                 Object object = null;
                 String typeName = item.getAttributes().getNamedItem("type").getNodeValue();
                 try {
-                    Class<?> objectClass = Class.forName(typeName);
+                    System.out.println("trying to load custom classloader for teg = " + teg + " with type attribute = " + typeName);
+                    CustomClassLoader customClassLoader = new CustomClassLoader();
+                    Class<?> objectClass = customClassLoader.loadClass(typeName);//Class.forName(typeName);
                     object = objectClass.newInstance();
                     processFields(item, object);
                     objects.add(object);
